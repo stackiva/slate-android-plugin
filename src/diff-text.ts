@@ -5,7 +5,6 @@
  * @param {String} prev
  * @param {String} next
  */
-
 function getDiffStart(prev: string, next: string): number | null {
   const length = Math.min(prev.length, next.length)
 
@@ -26,7 +25,6 @@ function getDiffStart(prev: string, next: string): number | null {
  * @param {String} next
  * @param {Number} max
  */
-
 function getDiffEnd(prev: string, next: string, max: number): number | null {
   const prevLength = prev.length
   const nextLength = next.length
@@ -58,7 +56,6 @@ type Offsets = {
  * @param {String} prev
  * @param {String} next
  */
-
 function getDiffOffsets(prev: string, next: string): Offsets | null {
   if (prev === next) return null
   const start = getDiffStart(prev, next)
@@ -75,7 +72,6 @@ function getDiffOffsets(prev: string, next: string): Offsets | null {
  * @param {String} text
  * @param {Object} offsets
  */
-
 function sliceText(text: string, offsets: Offsets): string {
   return text.slice(offsets.start, text.length - offsets.end)
 }
@@ -85,11 +81,11 @@ function sliceText(text: string, offsets: Offsets): string {
  * change in a way that can be used as operations like inserting, removing or
  * replacing text.
  *
- * @param {String} prev
- * @param {String} next
+ * @param {String | undefined} prev
+ * @param {String | undefined} next
  */
-
-export function diffText(prev: string, next: string): Diff | null {
+export function diffText(prev?: string, next?: string): Diff | null {
+  if (prev === undefined || next === undefined) return null;
   const offsets = getDiffOffsets(prev, next)
   if (offsets == null) return null
   const insertText = sliceText(next, offsets)
